@@ -4,7 +4,7 @@
 *Plugin Name: VTUpress 4 Woocommerce
 *Plugin URI: http://vtupress.com
 *Description: Allow users to use their vtupress balance to purchase woocommerce products
-*Version: 1.0.3
+*Version: 1.0.4
 *Author: Akor Victor
 *Author URI: https://facebook.com/akor.victor.39
 Requires PHP: 7.4
@@ -25,6 +25,21 @@ Domain Path:  /languages
 
 
 $path = WP_PLUGIN_DIR.'/vtupress/functions.php';
+
+require __DIR__.'/plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://github.com/bikendi-tech-solutions/vtupress_woocommerce',
+	__FILE__,
+	'vtupress_woocommerce'
+);
+//Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('main');
+
+$myUpdateChecker->getVcsApi()->enableReleaseAssets();
+
+
 if(file_exists($path) && in_array('vtupress/vtupress.php', apply_filters('active_plugins', get_option('active_plugins')))){
 
 
